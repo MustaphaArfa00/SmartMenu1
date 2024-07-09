@@ -31,6 +31,7 @@ app.use("/api/pasta", pastaRoute);
 app.use("/api/pizza", pizzaRoute);
 app.use("/api/desserts", dessertsRoute);
 app.use("/api/drinks", drinksRoute);
+app.use('/uploads', express.static('uploads'));
 // Response handler middleware
 app.use((obj, req, res, next) => {
     const statusCode = obj.status || 500; // Get the status code from the response object or default to 500
