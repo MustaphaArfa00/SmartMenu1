@@ -1,5 +1,5 @@
 import express from 'express'; // Import the Express library
-import { register, login, registerAdmin } from '../controllers/auth.controller.js'; // Import the authentication controller functions
+import { register, login, registerAdmin, adminLogin } from '../controllers/auth.controller.js'; // Import the authentication controller functions
 
 const router = express.Router(); // Create a new router instance
 
@@ -15,5 +15,7 @@ router.post("/login", login);
 // Handles POST requests to '/register-admin' and calls the registerAdmin controller function
 router.post("/register-admin", registerAdmin);
 
+
+router.post("/login-admin", adminLogin);
 // Export the router to be used in other parts of the application
 export default router;
