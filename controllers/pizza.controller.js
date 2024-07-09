@@ -1,9 +1,9 @@
 import Pizza from '../Models/Pizza.js';
 
 export const addPizza = async (req, res) => {
-    const { name, price } = req.body;
+    const { name, price,description } = req.body;
     try {
-        const pizza = new Pizza({ name, price });
+        const pizza = new Pizza({ name, price,description });
         await pizza.save();
         res.status(201).json({ message: 'Pizza added successfully', pizza });
     } catch (err) {

@@ -83,3 +83,37 @@ export const login = async (req, res, next) => {
     return res.status(500).send("Something went wrong");
   }
 };
+// Function to log in an admin
+export const adminLogin = async (req, res, next) => {
+  try {
+    // Find the admin user by email and populate the roles
+    const user = await User.findOne({ Email: req.body.Email, isAdmin: true }).populate("roles", "role");
+    const { roles } = user; // Extract roles from the user document
+    if (!user) {
+      // Return error if user is not found
+      return res.status(404).send("Admin Not Found");
+    }
+    // Compare the provided password with the stored hashed password
+    const isPasswordCorrect = await bcrypt.compare(req.body.Password, user.Password);
+    if (!isPasswordCorrect) {
+      // Return error if password is incorrect
+      return res.status(404).send("Password is incorrect!");
+    }
+    // Generate a JWT token with user id, isAdmin status, and roles
+    const token = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin, roles: roles },
+      process.env.JWT_SECRET
+    );
+    // Set the token in a cookie and return success response
+    res.cookie("access_token", token, { httpOnly: true })
+      .status(200)
+      .json({
+        status: 200,
+        message: "Admin Logged in successfully",
+        data: user
+      });
+  } catch (error) {
+    // Return error for any server issues
+    return res.status(500).send("Something went wrong");
+  }
+};

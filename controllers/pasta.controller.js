@@ -1,9 +1,9 @@
 import Pasta from '../Models/Pasta.js';
 
 export const addPasta = async (req, res) => {
-    const { name, price } = req.body;
+    const { name, price,description } = req.body;
     try {
-        const pasta = new Pasta({ name, price });
+        const pasta = new Pasta({ name, price ,description});
         await pasta.save();
         res.status(201).json({ message: 'Pasta added successfully', pasta });
     } catch (err) {

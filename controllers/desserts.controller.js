@@ -2,9 +2,9 @@ import Desserts from '../Models/Desserts.js';
 
 // Add a dessert
 export const addDessert = async (req, res) => {
-    const { name, price } = req.body;
+    const { name, price,description } = req.body;
     try {
-        const dessert = new Desserts({ name, price });
+        const dessert = new Desserts({ name, price,description });
         await dessert.save();
         res.status(201).json({ message: 'Dessert added successfully', dessert });
     } catch (err) {
